@@ -1,0 +1,44 @@
+<view class="page pad30">
+<form bindsubmit="formSubmit">
+  <view class='marb30'>
+    <text>完成进度</text>
+  </view>
+  <view class='marb30'>
+    <slider name="progress" activeColor="#0099FF" block-color="#0099FF" block-size="18" show-value value="{{progress}}" />
+  </view>
+
+  <view class='marb30'>
+    <text>完成情况</text>
+  </view>
+  <view class='marb30'>
+  <textarea value='{{completeContent}}' auto-height  name="completeContent" class="weui-textarea" placeholder="输入完成情况"  style="height: 3.3em" />
+  </view>
+  <view style="margin-bottom:80rpx;">
+      <view class="weui-uploader">
+                        <view class="weui-uploader__hd">
+                            <view class="weui-uploader__title">成果图片｜可上传9张图片</view>
+                            <view class="weui-uploader__info">{{images.length}}/9</view>
+                        </view>
+                        <view class="weui-uploader__bd">
+                            <view class="weui-uploader__files" id="uploaderFiles">
+                                <block wx:for="{{images}}" wx:key="*this">
+                                    <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                                        <image class="weui-uploader__img" src="{{item.imgUrl}}" mode="aspectFill" />
+                                    </view>
+                                </block>
+                            </view>
+                            <view class="weui-uploader__input-box">
+                                <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                            </view>
+                        </view>
+                    </view>
+
+
+  </view>
+  <view>
+    <button formType="submit" type='primary'>
+    完成提交
+    </button>
+  </view>
+  </form>
+</view>

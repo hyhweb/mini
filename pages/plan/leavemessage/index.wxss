@@ -1,0 +1,4 @@
+/* pages/plan/leavemessage/index.wxss */
+.weui-media-box__title {
+  line-height: 3;
+}

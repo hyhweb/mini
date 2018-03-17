@@ -1,0 +1,21 @@
+<view class="page pad30">
+  <view class="page__bd">
+    <view class="icon-box align-center mar30 marb80">
+      <block>
+        <icon type="success" size="{{size}}" />
+      </block>
+      <view class="icon-box__ctn pad30">
+        <view class="icon-box__title">创建成功</view>
+      </view>
+    </view>
+
+    <view class='mar30 marb50'>
+      <navigator open-type='navigate' url='/pages/plan/plandetail/index?id={{id}}'>
+        <button type='primary'>查看计划</button>
+      </navigator>
+    </view>
+    <view class='mar30'>
+        <button bindtap="goBack">继续创建</button>
+    </view>
+  </view>
+</view>

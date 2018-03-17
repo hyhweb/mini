@@ -1,0 +1,5 @@
+
+.pic-box{
+  width:270px;
+  margin:10px auto 30px;
+}

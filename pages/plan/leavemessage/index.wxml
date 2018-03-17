@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="page pad30">
+    <view class="page__bd page__bd_spacing">
+      <view class="list ">
+        <view class="list-item borderb" wx:key="{{*this}}" wx:for="{{listData}}">
+
+          <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+              <image class="weui-media-box__thumb" src="{{item.wxAvatarUrl}}" />
+            </view>
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+              <view class="weui-media-box__title">{{item.content}}</view>
+              <view class="weui-media-box__desc">{{item.createdDate}}</view>
+            </view>
+          </navigator>
+
+        </view>
+        <view class='pad30 align-center' wx:if="{{noMoreData}}">
+          到底部了
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

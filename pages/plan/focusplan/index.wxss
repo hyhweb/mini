@@ -1,0 +1,16 @@
+/* pages/plan/focusplan/index.wxss */
+.weui-media-box{
+  padding-bottom: 0;
+}
+.weui-panel{
+  background:none;
+}
+.weui-media-box__info{
+  margin:0;
+  padding-left:30rpx;
+  line-height: 50rpx;
+  color:#333;
+}
+.weui-media-box__title {
+  line-height: 3;
+}

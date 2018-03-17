@@ -1,0 +1,18 @@
+/* pages/plan/home/index.wxss */
+
+.swiper {
+  height: 180rpx;
+}
+
+.swiper-item {
+  position: relative;
+}
+
+
+.date-card{
+  padding:20rpx;
+   text-align: center;
+   background-color: #F2F2F2;
+   color:#666666;
+   box-shadow:0px 2px 10px #ccc;
+}

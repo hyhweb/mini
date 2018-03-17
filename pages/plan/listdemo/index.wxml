@@ -1,0 +1,20 @@
+<view class="container">
+  <view style="height:300rpx;">
+    2232
+  </view>
+  <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:100vh" bindscroll="scroll" bindscrolltolower="bindDownLoad" bindscrolltoupper="refresh">
+    <view class="item" wx:key="{{*this}}" wx:for="{{list}}">
+      <image class="img" src="https://cdn.kuaidi100.com/images/all/56/zhongtong.png"></image>
+      <view class="text">
+        <text class="title">{{item.carrierName}}</text>
+        <text class="description">{{item.carrierTelphone}}</text>
+        <text class="description">{{item.carrierId}}</text>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="body-view">
+    <loading hidden="{{hidden}}" bindchange="loadingChange">
+      加载中...
+    </loading>
+  </view>
+</view>

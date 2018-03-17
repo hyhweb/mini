@@ -1,0 +1,22 @@
+
+<view class="page">
+<view  class='wrapper'>
+<view class="weui-uploader__bd">
+<view class="weui-uploader__files pic-box clearfixd " id="uploaderFiles">
+<block wx:for="{{files}}" wx:key="*this">
+  <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+      <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+  </view>
+</block>
+<view class="weui-uploader__input-box ">
+    <view class="weui-uploader__input" bindtap="chooseImage"></view>
+</view>
+</view>
+</view>
+
+<view>
+<button bindtap="submitHandle" type="primary">发布</button>
+</view>
+</view>
+
+</view>

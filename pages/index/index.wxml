@@ -1,0 +1,27 @@
+<!--index.wxml-->
+
+
+<wxs src="./tool.wxs" module="tools" />
+<view> {{tools.bar(tools.FOO)}} </view>
+<view> {{tools.msg}} </view>
+<list
+title="创建一个组件"
+>
+ <!-- 这部分内容将被放置在组件 <slot name="before"> 的位置上 -->
+    <view slot="before">这里是插入到组件slot name="before"中的内容</view>
+    <!-- 这部分内容将被放置在组件 <slot name="after"> 的位置上 -->
+    <view slot="after">这里是插入到组件slot name="after"中的内容</view>
+</list>
+<view class="container">
+  <include src="../../template/photoWallList/index.wxml" />
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view>
+</view>

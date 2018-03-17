@@ -1,0 +1,71 @@
+{
+  "pages": [
+    
+    "pages/plan/home/index",
+    "pages/plan/listdemo/index",
+    "pages/plan/profile/index",
+    "pages/plan/plandetail/index",
+    "pages/plan/planlist/index",
+    "pages/plan/focusplan/index",
+    "pages/plan/leavemessage/index",
+    "pages/plan/my/index",
+    "pages/my/index",
+    "pages/plan/myplan/index",
+    "pages/plan/editplan/index",
+    "pages/index/index",
+    "pages/plan/createfinish/index",
+    "pages/plan/create/index",
+
+    "pages/photowall/create/index",
+    "pages/photowall/home/index",
+    "pages/logs/logs",
+    "pages/login/index",
+    "template/photoDetail/index",
+
+    "pages/plan/planfinishsuccess/index",
+    "pages/plan/planfinish/index",
+   "pages/plan/editfield/title/index",
+    "pages/plan/editfield/des/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#0099FF",
+    "navigationBarTitleText": "高校圈",
+    "navigationBarTextStyle": "#fff"
+  },
+  "tabBar": {
+    "selectedColor": "#0099FF",
+    "list": [
+      {
+        "pagePath": "pages/plan/home/index",
+        "text": "首页",
+        "iconPath": "./images/nav/homepage.png",
+        "selectedIconPath": "./images/nav/homepage_fill.png"
+      },
+      {
+        "pagePath": "pages/plan/planlist/index",
+        "text": "春晨计",
+        "iconPath": "./images/nav/createtask.png",
+        "selectedIconPath": "./images/nav/createtask_fill.png"
+      },
+      {
+        "pagePath": "pages/plan/create/index",
+        "text": "创建",
+        "iconPath": "./images/nav/addition.png",
+        "selectedIconPath": "./images/nav/addition_fill.png"
+      },
+      {
+        "pagePath": "pages/plan/my/index",
+        "text": "我的",
+        
+        "iconPath": "./images/nav/people.png",
+        "selectedIconPath": "./images/nav/people_fill.png"
+      }
+    ],
+    "position": "bottom"
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  }
+}
