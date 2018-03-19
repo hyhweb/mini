@@ -40,7 +40,7 @@ Page({
             var data = JSON.parse(res.data)
             console.log(data, 'data')
             this.setData({
-              bannerImg:'http://'+data.content.imgUrl
+              bannerImg:'https://'+data.content.imgUrl
             })
             //do something
           },

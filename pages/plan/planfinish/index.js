@@ -36,12 +36,49 @@ Page({
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        var images = res.tempFilePaths.map((item)=>{
-          return { imgUrl:item}
+        
+         res.tempFilePaths.map((item)=>{
+
+
+          wx.uploadFile({
+            url: 'https://wxapi.chunchenji.com/api/services/SCMS/commonService/UploadImg', //仅为示例，非真实的接口地址
+            filePath: item,
+            name: 'file',
+            formData: {
+              'imgUrl': item
+            },
+            success: (res) => {
+              var data = JSON.parse(res.data)
+              console.log(data, 'data')
+              var images = [];
+              images.push({ imgUrl: 'https://' + data.content.imgUrl })
+              that.setData({
+                images: that.data.images.concat(images)
+              });
+              
+              //do something
+            },
+            complete: function (res) {
+
+            }
+          })
+
+          
+
+
+
+         
         })
-        that.setData({
-          images: that.data.images.concat(images)
-        });
+
+
+
+
+
+
+
+
+
+        
       }
     })
   },

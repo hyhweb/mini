@@ -29,6 +29,11 @@ Page({
             title: '点赞成功',
             icon: 'success'
           })
+        }else{
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none'
+          })
         }
       }
     }
@@ -53,6 +58,11 @@ Page({
           wx.showToast({
             title: '关注成功',
             icon: 'success'
+          })
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none'
           })
         }
         console.log(res);

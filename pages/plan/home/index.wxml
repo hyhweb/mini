@@ -69,7 +69,7 @@
           </swiper>
 
 
-        <view wx:if="{{SumPlanByMe.total ==0 }}">
+        <view wx:if="{{SumPlanByMe.total ==0 && myPlanData.length == 0 }}">
           <text class='smallfont align-center'>
           凡事预则立，不预则废！计划定得早，烦恼自然少！
           </text>

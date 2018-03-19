@@ -2,7 +2,7 @@
   <view class="page">
     <view class="page__bd">
     <view bindtap='uploaderImg'>
-     <image  mode='scaleToFill' style="height:400rpx" src='{{bannerImg}}'></image>
+     <image  mode='scaleToFill' style="width:100%" src='{{bannerImg}}'></image>
     </view>
 
 
