@@ -26,15 +26,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getSumPlanByMe()
-    wx.getUserInfo({
-      success: res => {
-        app.globalData.userInfo = res.userInfo
-        this.setData({
-          userInfo: res.userInfo
-        })
-      }
-    })
+
   },
 
   /**
@@ -48,7 +40,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log(this.data.userInfo)
+    this.getSumPlanByMe()
+    wx.getUserInfo({
+      success: res => {
+        app.globalData.userInfo = res.userInfo
+        this.setData({
+          userInfo: res.userInfo
+        })
+      }
+    })
   },
 
   /**
@@ -80,9 +80,21 @@ Page({
   },
 
   /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    * 用户点击右上角分享
+    */
+  onShareAppMessage: function (res) {
+    if (res.from !== 'button') {
+      return {
+        title: '制定计划，做生活的主导者',
+        path: '/pages/plan/home/index',
+        imageUrl: 'http://chunchenji.com/webImages/chunchenjishareImg.png',
+        success: function (res) {
+          // 转发成功
+        },
+        fail: function (res) {
+          // 转发失败
+        }
+      }
+    }
   }
 })

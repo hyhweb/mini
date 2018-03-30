@@ -2,7 +2,7 @@
   <view class="page__bd">
     <view class="icon-box align-center mar30 marb80">
     <block>
-    <icon type="success" size="{{size}}" />
+    <icon type="success" size="{{size}}"  color="#0099FF" />
     </block>
       
       <view class="icon-box__ctn pad30">

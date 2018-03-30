@@ -8,17 +8,19 @@ Page({
     userInfo:{},
     listData: [],
     maxId: 0,
-    noMoreData: false
+    noMoreData: false,
+    wxOpenId:''
   },
   getGridData(count, sinceId, maxId, id) {
     var params = {
       method: 'post',
-      url: '/planService/GetList',
+      url: '/planService/GetListByMe',
       data: {
         "count": count || 10,
         "sinceId": sinceId || undefined,
         "maxId": maxId || 0,
-        "id": undefined
+        "id": undefined,
+        "wxOpenId": this.data.wxOpenId
       },
       success: (res) => {
         if (res.data.content.length == 0) {
@@ -48,15 +50,29 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(JSON.stringify(options),'info')
+    var id = options.id,
+      wxAvatarUrl = options.wxAvatarUrl,
+      nickName = options.nickName;
+      this.setData({
+        wxOpenId:id
+      })
+
     this.init();
-    wx.getUserInfo({
-      success: res => {
-        app.globalData.userInfo = res.userInfo
-        this.setData({
-          userInfo: res.userInfo
+    // wx.getUserInfo({
+    //   success: res => {
+    //     app.globalData.userInfo = res.userInfo
+    //     this.setData({
+    //       userInfo: res.userInfo
+    //     })
+    //   }
+    // })
+    this.setData({
+          userInfo: {
+            avatarUrl: wxAvatarUrl,
+            nickName: nickName
+          }
         })
-      }
-    })
   },
 
   /**
@@ -102,9 +118,21 @@ Page({
   },
 
   /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    * 用户点击右上角分享
+    */
+  onShareAppMessage: function (res) {
+    if (res.from !== 'button') {
+      return {
+        title: '制定计划，做生活的主导者',
+        path: '/pages/plan/home/index',
+        imageUrl: 'http://chunchenji.com/webImages/chunchenjishareImg.png',
+        success: function (res) {
+          // 转发成功
+        },
+        fail: function (res) {
+          // 转发失败
+        }
+      }
+    }
   }
 })

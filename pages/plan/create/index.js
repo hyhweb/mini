@@ -5,21 +5,22 @@ Page({
    * 页面的初始数据
    */
   data: {
-    bannerImg: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+    bannerImg: 'http://chunchenji.com/wximages/default_banner_img.png',
     objectTypeArray: app.globalData.visibleType,
-    objectType: 0,
+    objectType: 1,
     nickType: 0,
     type: 0,
-    date: (app.getNow()).year + '-' + (app.getNow()).month + '-' + (app.getNow()).day ,
+    date: (app.getNow()).year + '-' + (app.getNow()).month + '-' + (app.getNow()).day,
     typeArray: app.globalData.infoType,
     nickArray: app.globalData.nickNameType,
     title: '',
     text: '',
     form: {
-      objectType: 0,
+      objectType: 1,
       nickType: 0,
       type: 0
-    }
+    },
+    disabled: false
   },
   uploaderImg() {
     wx.chooseImage({
@@ -28,7 +29,6 @@ Page({
         this.setData({
           prevImg: tempFilePaths[0]
         })
-        console.log(tempFilePaths, 'tempfilepaths')
         wx.uploadFile({
           url: 'https://wxapi.chunchenji.com/api/services/SCMS/commonService/UploadImg', //仅为示例，非真实的接口地址
           filePath: tempFilePaths[0],
@@ -36,80 +36,107 @@ Page({
           formData: {
             'imgUrl': tempFilePaths[0]
           },
-          success:  (res) => {
+          success: (res) => {
             var data = JSON.parse(res.data)
-            console.log(data, 'data')
-            this.setData({
-              bannerImg:'https://'+data.content.imgUrl
-            })
-            //do something
+            if (data.code == 1000){
+              this.setData({
+                bannerImg:data.content.imgUrl
+              })
+              wx.showToast({
+                title: '图片上传成功',
+                duration: 3000
+              })
+            }else{
+              wx.showToast({
+                title: '图片上传失败',
+                icon: 'none',
+                duration: 3000
+              })
+            }
+           
+           
+          
           },
           complete: function (res) {
-          
+
           }
         })
       }
     })
   },
   submint() {
-    if (this.data.title == ""){
-      wx.showToast({
-        title: '请填写春晨计的名称',
-        icon:'none'
-      })
+   
+    if (this.data.title == "") {
+        wx.showToast({
+          title: '请填写春晨计的名称',
+          icon: 'none'
+        })
+
       return;
     }
     if (this.data.text == "") {
-      wx.showToast({
-        title: '请填写春晨计的描述',
-        icon: 'none'
-      })
+        wx.showToast({
+          title: '请填写春晨计的描述',
+          icon: 'none'
+        })
       return;
     }
-    var fornData = {
-      bannerImg: this.data.bannerImg,
-      title: this.data.title,
-      content: this.data.text,
-      planType: this.data.form.type,
-      completeTime: this.data.date,
-      public: this.data.form.objectType,
-      nickName: app.globalData.nickNameType[this.data.form.nickType].text
+    this.setData({
+      disabled: true
+    })
+    app.loginAfterHandle(() => {
      
-    }
-    var params = {
-      method: 'post',
-      url: '/planService/SavePlan',
-      data: fornData,
-      success: (res) => {
-        console.log(res, 'res');
-        var id = res.data.content.planId ;
-        wx.navigateTo({
-          url: '/pages/plan/createfinish/index?id=' + id,
-          success:()=>{
-            this.setData({
-              bannerImg: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-              objectType: 0,
-              nickType: 0,
-              type: 0,
-              date: (app.getNow()).year + '-' + (app.getNow()).month + '-' + (app.getNow()).day,
-              title: '',
-              text: '',
-              form: {
-                objectType: 0,
-                nickType: 0,
-                type: 0
-              }
-            })
-            wx.removeStorageSync('titleField')
-            wx.removeStorageSync('desField')
-          }
-        })
-        
+      var formData = {
+        bannerImg: this.data.bannerImg,
+        title: this.data.title,
+        content: this.data.text,
+        planType: this.data.form.type,
+        completeTime: this.data.date,
+        public: this.data.form.objectType,
+        nickName: app.globalData.nickNameType[this.data.form.nickType].text
+
       }
-    }
-    app.ajax(params)
-    console.log(fornData, 'form')
-    
+      if (formData.nickName =="匿名"){
+        formData.isNick =1;
+      }else{
+        formData.isNick = 0;
+      }
+      if (formData.bannerImg =="http://chunchenji.com/wximages/default_banner_img.png"){
+        formData.bannerImg = "";
+      }
+      var params = {
+        method: 'post',
+        url: '/planService/SavePlan',
+        data: formData,
+        success: (res) => {
+          var id = res.data.content.planId;
+          wx.navigateTo({
+            url: '/pages/plan/createfinish/index?id=' + id,
+            success: () => {
+              this.setData({
+                bannerImg: 'http://chunchenji.com/wximages/default_banner_img.png',
+                objectType: 1,
+                nickType: 0,
+                type: 0,
+                date: (app.getNow()).year + '-' + (app.getNow()).month + '-' + (app.getNow()).day,
+                title: '',
+                text: '',
+                form: {
+                  objectType: 1,
+                  nickType: 0,
+                  type: 0
+                }
+              })
+              wx.removeStorageSync('titleField')
+              wx.removeStorageSync('desField')
+            }
+          })
+
+        }
+      }
+      app.ajax(params)
+
+    })
   },
   bindPickerChange: function (e) {
     this.setData({
@@ -147,29 +174,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //console.log(app.globalData.nickNameType,'app.globalData.nickNameType')
-    
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    //console.log(app.globalData.userInfo, '1223354')
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
     var title = wx.getStorageSync('titleField');
     var text = wx.getStorageSync('desField');
-    if (title !="") {
+    if (title != "") {
       this.setData({
         title: title
       })
-    }else{
+    } else {
       this.setData({
         title: ''
       })
@@ -178,12 +204,14 @@ Page({
       this.setData({
         text: text
       })
-    }else{
+    } else {
       this.setData({
         text: ''
       })
     }
-
+    this.setData({
+      disabled: false
+    })
   },
 
   /**
@@ -215,9 +243,22 @@ Page({
   },
 
   /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    * 用户点击右上角分享
+    */
+  onShareAppMessage: function (res) {
+    if (res.from !== 'button') {
+      return {
+        title: '制定计划，做生活的主导者',
+        path: '/pages/plan/home/index',
+        imageUrl: 'http://chunchenji.com/webImages/chunchenjishareImg.png',
+        success: function (res) {
+          // 转发成功
+        },
+        fail: function (res) {
+          // 转发失败
+        }
+      }
+    }
   }
+
 })

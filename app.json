@@ -1,6 +1,5 @@
 {
   "pages": [
-    
     "pages/plan/home/index",
     "pages/plan/listdemo/index",
     "pages/plan/profile/index",
@@ -15,17 +14,16 @@
     "pages/index/index",
     "pages/plan/createfinish/index",
     "pages/plan/create/index",
-
     "pages/photowall/create/index",
     "pages/photowall/home/index",
     "pages/logs/logs",
     "pages/login/index",
     "template/photoDetail/index",
-
     "pages/plan/planfinishsuccess/index",
     "pages/plan/planfinish/index",
-   "pages/plan/editfield/title/index",
-    "pages/plan/editfield/des/index"
+    "pages/plan/editfield/title/index",
+    "pages/plan/editfield/des/index",
+    "pages/plan/suggestion/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -57,7 +55,6 @@
       {
         "pagePath": "pages/plan/my/index",
         "text": "我的",
-        
         "iconPath": "./images/nav/people.png",
         "selectedIconPath": "./images/nav/people_fill.png"
       }

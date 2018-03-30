@@ -3,7 +3,7 @@
     <view class="page__bd">
       <view class="weui-panel weui-panel_access pad30">
         <view class="weui-panel__bd">
-   <view class="mar30">
+          <view class="mar30">
             <view class="date-card">
               <view style="font-size:80rpx;">
                 {{now.hao}}
@@ -12,7 +12,7 @@
                 {{now.month}}.{{now.year}}｜第{{now.week}}周
               </view>
               <view class="pad20">
-                <progress backgroundColor="#ccc"  activeColor="#0099FF" stroke-width="2" percent="{{progress}}" show-info />
+                <progress backgroundColor="#ccc" activeColor="#0099FF" stroke-width="2" percent="{{progress}}" show-info />
               </view>
               <view>
                 一年之计在于春，一天之计在于晨！
@@ -23,99 +23,109 @@
       </view>
 
 
-      <view class="weui-panel weui-panel_access pad30">
-        <view class="weui-panel__bd borderb" >
-
-       
+      <view class="weui-panel weui-panel_access pad20">
+        <view class="weui-panel__bd borderb">
 
 
-          <navigator open-type="navigate" url="/pages/plan/profile/index">
-            <view class="weui-flex mart30">
+
+
+          <view>
+            <view class="weui-flex ">
               <view class="weui-flex__item" style="flex:none;">
-                <view class="placeholder pad30" style="padding-top:10rpx; padding-left:0;">
+                <view class="placeholder pad20" style=" padding-left:0;">
                   <image class="prev-img middle face " src="{{userInfo.avatarUrl}}" background-size="cover"></image>
                 </view>
               </view>
               <view class="weui-flex__item" style="width:68%;">
                 <view class="placeholder">
-                  <view>{{userInfo.nickName}}</view>
+                  <view  style="padding-top:20rpx;">{{userInfo.nickName}}</view>
                   <view class='nowrap'>春晨计 {{SumPlanByMe.total}}｜ 实现 {{SumPlanByMe.completeCount}} </view>
                 </view>
               </view>
             </view>
-          </navigator>
-
-
-
-
-        </view>
-        <view class="weui-panel__ft mart20" >
-          <swiper display-multiple-items="3" class="swiper">
-            <block wx:key="{{*this}}" wx:for="{{myPlanData}}">
-              <swiper-item class="padr30">
-                <navigator open-type="navigate" url="/pages/plan/plandetail/index?id={{item.planId}}" class="swiper-item">
-                  <view class="small-badge minifont">
-                    {{item.progress}}%
-                  </view>
-                  <view>
-                    <image src="{{item.bannerImg}}" style="width:240rpx; height:120rpx;" class="slide-image" />
-                  </view>
-                  <view class="smallfont">
-                    {{item.title}}
-                  </view>
-                </navigator>
-              </swiper-item>
-            </block>
-          </swiper>
-
-
-        <view wx:if="{{SumPlanByMe.total ==0 && myPlanData.length == 0 }}">
-          <text class='smallfont align-center'>
-          凡事预则立，不预则废！计划定得早，烦恼自然少！
-          </text>
-          <view class="mart20">
-          <button class="bg1" bindtap="toAdd"  type='primary' style="width:50%" >马上创建计划</button>
           </view>
-          
+
+
+
+
         </view>
+        <view class="weui-panel__ft mart20">
+          <view wx:if="{{SumPlanByMe.total !=0 }}">
+            <swiper  next-margin="20px"  display-multiple-items="{{displayNum}}" class="swiper">
+              <block wx:key="{{*this}}" wx:for="{{myPlanData}}">
+                <swiper-item class="padr30;">
+                  <navigator open-type="navigate" url="/pages/plan/plandetail/index?id={{item.planId}}" class="swiper-item">
+                    <view class="small-badge minifont">
+                      {{item.progress}}%
+                    </view>
+                    <view>
+                      <image  mode='widthFix aspectFit' src="{{item.bannerImg}}" style="width:240rpx; height:120rpx;" class="slide-image" />
+                    </view>
+                    <view class="smallfont nowrap" wx:if="{{displayNum > 2}}" style="width:100%">
+                      {{item.title}}
+                    </view>
+                    <view class="smallfont nowrap" wx:elif="{{displayNum == 2}}" style="width:66%">
+                      {{item.title}}
+                    </view>
+                    <view class="smallfont nowrap" wx:elif="{{displayNum == 1}}" style="width:33%">
+                      {{item.title}}
+                    </view>
+                  </navigator>
+                </swiper-item>
+              </block>
+            </swiper>
+          </view>
+
+          <view wx:if="{{SumPlanByMe.total ==0 && myPlanData.length == 0 }}">
+          <view  style="line-height:30rpx; margin-bottom:40rpx">
+           <text class='align-center c3 ' >
+          计划定得早，烦恼自然少
+          </text>
+          </view>
+           
+            <view class="mar20">
+              <button bindtap="toAdd" type='primary' style="width:350rpx;">马上创建计划</button>
+            </view>
+
+          </view>
         </view>
       </view>
 
       <view class="weui-panel weui-panel_access">
-        <view class="weui-panel__hd" style="font-size:40rpx;"><text style="color:#333;">春晨计</text> |  见贤思齐</view>
+        <view class="weui-panel__hd" style="font-size:18px;">
+          <text style="color:#333;">春晨计</text> |  见贤思齐</view>
         <view class="weui-panel__bd">
           <view class="list-item borderb" wx:key="{{*this}}" wx:for="{{listData}}">
             <navigator open-type="navigate" url="/pages/plan/plandetail/index?id={{item.planId}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
               <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                <image class="weui-media-box__thumb" src="{{item.bannerImg}}" />
+                <image mode='widthFix aspectFit' class="weui-media-box__thumb border" src="{{item.wxAvatarUrl}}" />
               </view>
               <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                <view class="weui-media-box__title">{{item.title}}</view>
-                <view class="weui-media-box__desc">{{item.text}}</view>
+                <view class="weui-media-box__title" style="margin-top:-8rpx;" >{{item.title}}</view>
                 <view class="weui-media-box__info">
-                  <text class='weui-media-box__info__meta'>围观 {{item.viewCount}}</text>
-                  <text class='weui-media-box__info__meta '>点赞 {{item.likeCount}}</text>
-                  <text class='weui-media-box__info__meta '>关注 {{item.friendCount}}</text>
+                  <text class='weui-media-box__info__meta  c3' style="padding-top:10rpx;">围观 {{item.viewCount}}</text>
+                  <text class='weui-media-box__info__meta c3' style="padding-top:10rpx;">点赞 {{item.likeCount}}</text>
+                  <text class='weui-media-box__info__meta c3' style="padding-top:10rpx;">关注 {{item.friendCount}}</text>
                 </view>
               </view>
             </navigator>
           </view>
-          
 
-            <view wx:if="{{listData.length ==0 }}">
-          <text class='smallfont align-center'>
+
+          <view wx:if="{{listData.length ==0 }}">
+            <text class='align-center c3'>
           暂无计划！快来抢个沙发
           </text>
-          <view class="mart20">
-          <button bindtap="toAdd" type='primary' style="width:50%" >马上创建计划</button>
-          </view>
-          
-        </view>
+            <view class="mart20 marb30">
+              <button bindtap="toAdd" type='primary' style="width:350rpx;">马上创建计划</button>
+            </view>
 
-       <view wx:else="noMoreData" class="pad30">
-            <button bindtap='loadMore' class="weui-btn" type="default" >查看更多</button>
-        </view>
-        
+          </view>
+
+          <view wx:else="noMoreData" class="pad30 ">
+            <button bindtap='loadMore' class="weui-btn" type="default">查看更多</button>
+          </view>
+
 
         </view>
 

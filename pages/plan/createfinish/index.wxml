@@ -2,7 +2,7 @@
   <view class="page__bd">
     <view class="icon-box align-center mar30 marb80">
       <block>
-        <icon type="success" size="{{size}}" />
+        <icon type="success" size="{{size}}" color="#0099FF" />
       </block>
       <view class="icon-box__ctn pad30">
         <view class="icon-box__title">创建成功</view>
@@ -15,7 +15,9 @@
       </navigator>
     </view>
     <view class='mar30'>
-        <button bindtap="goBack">继续创建</button>
+         <navigator open-type='switchTab' url='/pages/plan/home/index'>
+        <button type='default'>返回首页</button>
+      </navigator>
     </view>
   </view>
 </view>

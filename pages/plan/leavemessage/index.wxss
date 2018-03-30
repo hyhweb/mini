@@ -2,3 +2,8 @@
 .weui-media-box__title {
   line-height: 3;
 }
+.weui-media-box_appmsg{
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+
+}

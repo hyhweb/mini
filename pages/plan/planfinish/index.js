@@ -1,4 +1,4 @@
-// pages/plan/planfinish/index.js
+
 var app = getApp();
 Page({
 
@@ -6,10 +6,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id:'',
+    id: '',
     progress: 0,
     completeContent: "",
     images: []
+  },
+  bindInput(e) {
+    this.setData({
+      completeContent: e.detail.value
+    })
   },
   getDetail() {
     var params = {
@@ -19,10 +24,9 @@ Page({
         "planId": this.data.id
       },
       success: (res) => {
-        console.log(res, 'res');
         this.setData({
           progress: res.data.content[0].progress || 0,
-          completeContent: res.data.content[0].completeContent,
+          completeContent: (res.data.content[0].completeContent == null ? "" : res.data.content[0].completeContent),
           images: res.data.content[0].images
         })
       }
@@ -36,8 +40,8 @@ Page({
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        
-         res.tempFilePaths.map((item)=>{
+
+        res.tempFilePaths.map((item) => {
 
 
           wx.uploadFile({
@@ -49,13 +53,24 @@ Page({
             },
             success: (res) => {
               var data = JSON.parse(res.data)
-              console.log(data, 'data')
-              var images = [];
-              images.push({ imgUrl: 'https://' + data.content.imgUrl })
-              that.setData({
-                images: that.data.images.concat(images)
-              });
-              
+              if (data.code == 1000) {
+                var images = [];
+                images.push({ imgUrl:data.content.imgUrl })
+                that.setData({
+                  images: that.data.images.concat(images)
+                });
+                wx.showToast({
+                  title: '图片上传成功'
+                })
+
+              }else{
+                wx.showToast({
+                  title: '图片上传失败',
+                  icon: 'none'
+                })
+              }
+             
+
               //do something
             },
             complete: function (res) {
@@ -63,11 +78,11 @@ Page({
             }
           })
 
-          
 
 
 
-         
+
+
         })
 
 
@@ -78,7 +93,7 @@ Page({
 
 
 
-        
+
       }
     })
   },
@@ -94,24 +109,31 @@ Page({
       url: '/planService/SavePlanOther',
       data: option,
       success: (res) => {
-        console.log(res, 'res');
         wx.navigateTo({
-          url: '/pages/plan/planfinishsuccess/index?id='+this.data.id,
+          url: '/pages/plan/planfinishsuccess/index?id=' + this.data.id,
         })
       }
     }
     app.ajax(params)
   },
   formSubmit: function (e) {
-    var param = {
-      ...e.detail.value,
-      images: this.data.images,
-      id: this.data.id
-    }
-    this.savePlan(param);
-    
-    console.log('form发生了submit事件，携带数据为：', param)
-   
+    app.loginAfterHandle(() => {
+      var param = {
+        ...e.detail.value,
+        images: this.data.images,
+        id: this.data.id
+      }
+      if (param.completeContent.length >200){
+        wx.showToast({
+          title: '完成情况不能超过200个文字',
+          icon:'none'
+        })
+        return;
+      }
+      console.log(param,'param')
+      this.savePlan(param);
+    })
+
   },
   /**
    * 生命周期函数--监听页面加载
@@ -127,48 +149,60 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    * 用户点击右上角分享
+    */
+  onShareAppMessage: function (res) {
+    if (res.from !== 'button') {
+      return {
+        title: '制定计划，做生活的主导者',
+        path: '/pages/plan/home/index',
+        imageUrl: 'http://chunchenji.com/webImages/chunchenjishareImg.png',
+        success: function (res) {
+          // 转发成功
+        },
+        fail: function (res) {
+          // 转发失败
+        }
+      }
+    }
   }
 })

@@ -5,49 +5,68 @@ Page({
    * 页面的初始数据
    */
   data: {
-    listData: [],
-    maxId: 0,
-    noMoreData: false
+    suggestion:"",
+    disabled:false
   },
-  getGridData(count, sinceId, maxId, id) {
-    var params = {
-      method: 'post',
-      url: '/messageService/GetList',
-      data: {
-        "count": count || 10,
-        "sinceId": sinceId || undefined,
-        "maxId": maxId || 0,
-        "id": id || undefined
-      },
-      success: (res) => {
-        if (res.data.content.length == 0) {
-          this.setData({
-            noMoreData: true
-          })
-          return;
-        }
-        var data = this.data.listData
-        this.setData({
-          listData: data.concat(res.data.content),
-        })
-        if (res.data.content.length !== 0) {
-          var maxId = res.data.content[res.data.content.length - 1].messasgeId
-          this.setData({
-            maxId: maxId
-          })
-        }
-      }
+  bindInput(e) {
+    this.setData({
+      suggestion: e.detail.value
+    })
+  },
+  submit(){
+    if (this.data.suggestion == ""){
+      wx.showToast({
+        title: '意见或建议不能为空',
+        icon:'none'
+      })
+      return;
     }
-    app.ajax(params)
-  },
-  init(){
-    this.getGridData()
+   
+    var data ={
+      content: this.data.suggestion
+    }
+    wx.showLoading({
+      title: '提交中...',
+    })
+    this.setData({
+      disabled:true
+    })
+    var param = {
+      method:'post',
+      url:'/commonService/Feedback',
+      data:data,
+      success:(res)=>{
+        var data = res.data
+        if (data.code == 1000) {
+          wx.showToast({
+            title: '提交成功',
+          })
+        }else{
+          wx.showToast({
+            title: '提交失败，请重新提交',
+            icon:'none'
+          })
+        }
+        this.setData({
+          disabled: false
+        })
+        wx.switchTab({
+          url: '/pages/plan/my/index',
+        })
+      },
+      complete:()=>{
+        this.setData({
+          disabled: false
+        })
+      }
+    };
+    app.ajax(param)
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   this.init();
+  
   },
 
   /**
@@ -82,14 +101,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-   
+  
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    this.getGridData(undefined, undefined, this.data.maxId)
+  
   },
 
   /**

@@ -1,44 +1,53 @@
-<view class="page">
-  <view class="page__bd" style="margin-bottom:100rpx;">
-    <view>
-      <image style="width:100%; height:300rpx" src='{{info.bannerImg}}'></image>
+<view  class="page padb150" wx:if="{{notdel}}">
+  <view class="page__bd" >
+    <view >
+      <image mode='widthFix aspectFit' style="width:100%;height:300rpx; " src='{{info.bannerImg}}'></image>
     </view>
     <view style="position:relative;">
+    <navigator wx:if="{{info.nickName !== '匿名'}}" open-type="navigate" url="/pages/plan/profile/index?id={{info.wxOpenId}}&wxAvatarUrl={{info.wxAvatarUrl}}&nickName={{info.nickName}}">
       <view style="position:absolute;top:-40rpx;left:40rpx;">
-        <image style="width:80rpx; height:80rpx;border:1px solid #eee;" src='{{info.wxAvatarUrl}}' ></image>
-        <text class='pad20'>{{info.nickName}}</text>
+        <image style="width:80rpx; height:80rpx;border:1px solid #eee;" src='{{info.wxAvatarUrl}}'></image>
+        <text class='pad20 c3'  >{{info.nickName}}</text>
+      </view>
+      </navigator>
+      <view wx:else style="position:absolute;top:-40rpx;left:40rpx;">
+        <image style="width:80rpx; height:80rpx;border:1px solid #eee;" src='{{info.wxAvatarUrl}}'></image>
+        <text class='pad20 c3'  >{{info.nickName}}</text>
       </view>
     </view>
     <view class="pad30">
       <view class="mart30">
-        <text class='bigfont'>{{info.title}}</text>
+        <text class='bigfont wordbreak'>{{info.title}}</text>
       </view>
-      <view class="smallfont mart20 c1">
+      <view class="smallfont mart20 c3">
         <text>{{info.completeTime}}</text> |
         <text>类型：{{info.planTypeName}}</text>
       </view>
-      <view class=" mart20">
+      <view class=" mart20 pad10 wordbreak border-dashed c4">
         {{info.content}}
       </view>
       <view class=" mart20">
-        <text>完成时间：{{info.completeTime}}</text>
+        <view>完成时间：<text class="c4">{{info.completeTime}}</text></view>
       </view>
       <view class=" mart20">
         <text>完成情况：</text>
         <progress backgroundColor="#ccc" activeColor="#0099FF" stroke-width="2" percent="{{info.progress}}" show-info />
       </view>
 
-      <view class=" mart20" wx:if="{{info.images.length !=0 && info.completeContent != null }}">
-        <text>完成成果：</text>
-         <view class="mart20">
-          {{info.completeContent}}
-         </view>
-        <view class="mart20" wx:key="{{*this}}" wx:for="{{info.images}}">
-          <image style="width:100%;" src='{{item.imgUrl}}'></image>
+      <view class=" mart20" >
+      <view wx:if="{{info.completeContent != null }}">
+        <text>成果展示：</text>
+        <view class="mart20 wordbreak c4">
+        <text>{{info.completeContent}}
+        </text>
+        </view>
+        </view>
+        <view wx:if="{{info.images.length !=0}}" class="mart20" wx:key="{{*this}}" wx:for="{{info.images}}">
+          <image mode='widthFix' style="width:100%;" src='{{item.imgUrl}}'></image>
         </view>
       </view>
 
-      <view class="smallfont c1">
+      <view class="mart20 smallfont c3">
         <text>围观 {{info.viewCount}}｜  点赞  {{info.likeCount}} ｜ 关注  {{info.friendCount}}</text>
       </view>
 
@@ -50,43 +59,44 @@
         </view>
         <view class="weui-flex__item">
           <view class="placeholder pad10">
-            <button  style="padding:0;" bindtap='handleFriend' class="weui-btn" type="default">关注</button>
+            <button style="padding:0;" bindtap='handleFriend' class="weui-btn" type="default">关注</button>
           </view>
         </view>
 
         <view class="weui-flex__item">
           <view class="placeholder pad10">
-            <button  style="padding:0;" class="weui-btn" type="default" open-type="share">分享</button>
+            <button style="padding:0;" class="weui-btn" type="default" open-type="share">分享</button>
           </view>
         </view>
 
       </view>
 
       <view>
-        <view >
+        <view  wx:if="{{listData.length !=0}}" >
 
-         
-              <view wx:if="{{listData.length !=0}}" style="margin-left:-75rpx; width:150rpx;position:relative;z-index:10;left:50%;top:50rpx;background-color:#ffffff;">互动专区</view>
-          
-          
-          <view class="weui-panel weui-panel_access">
+
+          <view style="margin-left:-75rpx; width:150rpx;position:relative;z-index:10;left:50%;top:30rpx;background-color:#ffffff;color:#666;">互动专区</view>
+          <view class="borderb"></view>
+
+
+          <view class=" weui-panel_access" >
             <view class="weui-panel__bd">
               <view class="list-item" wx:key="{{*this}}" wx:for="{{listData}}">
-                <navigator  class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                  <view style="width:100rpx;height:100rpx;margin-top:-20rpx" class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                <view class="weui-media-box weui-media-box_appmsg" >
+                  <view style="width:100rpx;height:100rpx;margin-top:24rpx" class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <image class="weui-media-box__thumb" src="{{item.wxAvatarUrl}}" />
                   </view>
                   <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
 
-                  
-                    
-                    <view class="weui-media-box__info"  style="line-height:50rpx;" >
-                    <view class="weui-media-box__title">{{item.nickName}}</view>
+
+
+                    <view class="weui-media-box__info" style="line-height:50rpx;">
+                      <view class="weui-media-box__title">{{item.nickName}}</view>
                       <view class='weui-media-box__info__meta'>{{item.createdDate}}</view>
                     </view>
-                    <view class="weui-media-box__title">{{item.content}}</view>
+                    <view class="wordbreak" >{{item.content}}</view>
                   </view>
-                </navigator>
+                </view>
               </view>
             </view>
           </view>
@@ -105,12 +115,15 @@
   <view class="weui-footer fixed-b">
     <view class="weui-cell weui-cell_input weui-cell_vcode" style="border-top:1px solid #eee">
       <view class="weui-cell__bd">
-        <input value='{{inputValue}}' bindinput="writeMsg" name="msg"  class="weui-input" placeholder="留言互动" />
+        <input value='{{inputValue}}' bindinput="writeMsg" name="msg" class="weui-input" placeholder="留言互动" />
       </view>
-     <view class="weui-cell__ft">
+      <view class="weui-cell__ft">
         <view class="weui-vcode-btn" bindtap='submitMsg'>留言</view>
-      </view> 
+      </view>
     </view>
 
   </view>
-</view>
+</view >
+<view  class="page padb150" wx:else="{{notdel}}">
+<view class="align-center pad20 c4">该春晨计已被主人删除</view>
+</view >

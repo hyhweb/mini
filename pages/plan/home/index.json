@@ -1,5 +1,5 @@
 {
   "navigationBarTitleText": "春晨计首页",
-  "enablePullDownRefresh": true,
+  "enablePullDownRefresh": false,
   "backgroundTextStyle": "dark"
 }

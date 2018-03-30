@@ -1,6 +1,6 @@
-<view class="container ">
-<view class="page padt30">
-  <view class="page__bd ">
+<view class=" ">
+<view class="">
+  <view class="">
           <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__bd ">
@@ -8,7 +8,7 @@
                 </view>
             </view>
         </view>
-        <view class="mar30">
+        <view class="mar30" style="padding-top:50rpx;">
         <button block type="primary" bindtap='confirmHandle'>完成</button>
         </view>
   </view>

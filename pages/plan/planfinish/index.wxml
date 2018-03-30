@@ -10,9 +10,10 @@
   <view class='marb30'>
     <text>完成情况</text>
   </view>
-  <view class='marb30'>
-  <textarea value='{{completeContent}}' auto-height  name="completeContent" class="weui-textarea" placeholder="输入完成情况"  style="height: 3.3em" />
+  <view class='pad10' >
+  <textarea  maxlength="-1"  bindinput="bindInput" value='{{completeContent}}' auto-height  name="completeContent" class="weui-textarea border " placeholder="输入完成情况"  style="min-height: 3.3em;" />
   </view>
+  <view class="weui-textarea-counter " style="margin-bottom:60rpx">{{completeContent.length}}/200</view>
   <view style="margin-bottom:80rpx;">
       <view class="weui-uploader">
                         <view class="weui-uploader__hd">

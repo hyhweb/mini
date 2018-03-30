@@ -1,5 +1,19 @@
 const app = getApp();
-
+var share = (res)=>{
+  if (res.from !== 'button') {
+    return {
+      title: '制定计划，做生活的主导者',
+      path: '/pages/plan/home/index',
+      imageUrl: 'http://chunchenji.com/webImages/chunchenjishareImg.png',
+      success: function (res) {
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
+  }
+}
 Page({
 
   /**
@@ -15,7 +29,8 @@ Page({
     SumPlanByMe:{},
     userInfo:{},
     progress: parseInt((app.getNow().week/52)*100),
-    noMoreData:false
+    noMoreData:false,
+    displayNum:1
   },
   toAdd(){
     wx.switchTab({
@@ -31,6 +46,22 @@ Page({
         this.setData({
           SumPlanByMe: res.data.content
         })
+        if (res.data.content.total<3){
+          if (res.data.content.total ==2){
+            this.setData({
+              displayNum: 2
+            })
+          }else{
+            this.setData({
+              displayNum:1
+            })
+          }
+          
+        }else{
+          this.setData({
+            displayNum: 3
+          })
+        }
       }
     }
     app.ajax(params)
@@ -47,7 +78,7 @@ Page({
   getMyPlanData(count, sinceId, maxId, id) {
     var params = {
       method: 'post',
-      url: '/planService/GetList',
+      url: '/planService/GetListByMe',
       data: {
         "count": 10000,
         "sinceId": sinceId || 0,
@@ -72,8 +103,7 @@ Page({
         "count": count || 5,
         "sinceId": sinceId || 0,
         "maxId": maxId || 0,
-        "id": id || undefined,
-        "wxOpenId": undefined
+        "id": id || undefined
       },
       success: (res) => {
         if(res.data.content.length == 0){
@@ -130,7 +160,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    if (app.globalData.wxOpenId !=""){
+      this.init()
+    }
   },
 
   /**
@@ -165,7 +197,19 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  }
+  onShareAppMessage: function (res) {
+    if (res.from !== 'button') {
+      return {
+        title: '制定计划，做生活的主导者',
+        path: '/pages/plan/home/index',
+        imageUrl: 'http://chunchenji.com/webImages/chunchenjishareImg.png',
+        success: function (res) {
+          // 转发成功
+        },
+        fail: function (res) {
+          // 转发失败
+        }
+      }
+    }
+  },
 })

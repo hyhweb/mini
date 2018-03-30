@@ -1,19 +1,11 @@
 var url = "http://rap2api.taobao.org/app/mock/4987/GET/getPageList";
 var page = 1;
 var now = new Date();
-console.log(now.getMonth(0))
 var GetList = function (that) {
   that.setData({
     hidden: false
   });
-  // wx.request({
-  //   url: url,
-  //   data: {
-  //     pageSize: 10,
-  //     pageNo: page
-  //   },
-  //   success: function (res) {
-    //  console.log(res,'res')
+
       var l = that.data.list
       var data = [
         {
@@ -170,8 +162,7 @@ var GetList = function (that) {
       that.setData({
         hidden: true
       });
-  //   }
-  // });
+
 }
 Page({
   data: {
@@ -213,9 +204,9 @@ Page({
     GetList(this)
   },
   onPullDownRefresh: function () {
-    console.log("下拉")
+
   },
   onReachBottom: function () {
-    console.log("上拉");
+
   }
 })  

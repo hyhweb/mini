@@ -1,11 +1,11 @@
-<view class="container pad30 ">
-  <swiper  indicator-dots="{{true}}" bindchange="bindchange" current="{{current}}" class="swiper" style="background-color:#fff;height:480px;box-shadow:0px 1px 2px #ccc;">
+<view class="container pad30 " wx:if="{{listData.length !==0}}">
+  <swiper  indicator-dots="{{true}}" bindchange="bindchange" current="{{current}}" class="swiper" style="background-color:#fff;height:510px;box-shadow:0px 1px 2px #ccc;">
     <block  wx:key="{{*this}}" wx:for="{{listData}}">
       <swiper-item>
         <view class="page " style="background-color:#ffffff;">
           <view class="page__bd">
-            <view style="height:300rpx">
-              <image mode='scaleToFill' style="height:300rpx" src='{{item.bannerImg}}'></image>
+            <view style="width:100%;height:300rpx">
+              <image mode='widthFix ' style="width:100%;height:300rpx" src='{{item.bannerImg}}'></image>
             </view>
             <view class="small-badge" wx:if="{{item.progress ==100}}">
                 已完成
@@ -13,30 +13,30 @@
             <view>
               <view>
                 <view class="weui-cells weui-cells_after-title">
-                  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                  <view  class="weui-cell weui-cell_access" >
                     <view class="weui-cell__bd">名称</view>
-                    <view class="weui-cell__ft">{{item.title}}</view>
-                  </navigator>
-                  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__ft nowrap"  style="width:80%">{{item.title}}</view>
+                  </view>
+                  <view url="" class="weui-cell weui-cell_access">
                     <view class="weui-cell__bd">描述</view>
                     <view class="weui-cell__ft  nowrap" style="width:80%">{{item.content}}</view>
-                  </navigator>
-                  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                  </view>
+                  <view url="" class="weui-cell weui-cell_access" >
                     <view class="weui-cell__bd">类型</view>
                     <view class="weui-cell__ft ">{{item.planTypeName}}</view>
-                  </navigator>
-                  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                  </view>
+                  <view url="" class="weui-cell weui-cell_access" >
                     <view class="weui-cell__bd">完成时间</view>
                     <view class="weui-cell__ft ">{{item.completeTime}}</view>
-                  </navigator>
-                  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                  </view>
+                  <view url="" class="weui-cell weui-cell_access" >
                     <view class="weui-cell__bd">可见对象</view>
                     <view class="weui-cell__ft ">{{visibleType[item.public].text}}</view>
-                  </navigator>
-                  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                  </view>
+                  <view url="" class="weui-cell weui-cell_access" >
                     <view class="weui-cell__bd">选择昵称</view>
                     <view class="weui-cell__ft ">{{item.nickName}}</view>
-                  </navigator>
+                  </view>
 
                 </view>
               </view>
@@ -63,7 +63,7 @@
               <view class="weui-flex__item pad10"  wx:if="{{item.progress !=100}}">
                 <navigator open-type="navigate" url="/pages/plan/planfinish/index?id={{item.planId}}">
                   <button type="primary" style="padding:0;">
-                    完成计划
+                    更新进度
                   </button>
                 </navigator>
               </view>
@@ -76,4 +76,19 @@
       </swiper-item>
     </block>
   </swiper>
+</view>
+<view wx:else style="margin-top:50%;">
+<view  style="line-height:30rpx; margin-bottom:40rpx">
+           <text class='align-center c3 ' >
+          还没数据，赶快创建自己的春晨计吧！
+          </text>
+          </view>
+           
+            <view class="mar20">
+            <navigator open-type='switchTab'
+            url='/pages/plan/create/index'
+            >
+              <button class="bg1"  type='primary' style="width:50%">马上创建计划</button>
+              </navigator>
+            </view>
 </view>

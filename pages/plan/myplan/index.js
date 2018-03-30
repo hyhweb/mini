@@ -13,14 +13,13 @@ Page({
   getGridData(count, sinceId, id) {
     var params = {
       method: 'post',
-      url: '/planService/GetList',
+      url: '/planService/GetListByMe',
       data: {
-        "count": count || 10,
+        "count": count || 10000,
         "sinceId": sinceId || 0,
         "id": id || null
       },
       success: (res) => {
-        console.log(res, 'res');
         this.setData({
           listData: res.data.content
         })
@@ -108,9 +107,21 @@ Page({
   },
 
   /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    * 用户点击右上角分享
+    */
+  onShareAppMessage: function (res) {
+    if (res.from !== 'button') {
+      return {
+        title: '制定计划，做生活的主导者',
+        path: '/pages/plan/home/index',
+        imageUrl: 'http://chunchenji.com/webImages/chunchenjishareImg.png',
+        success: function (res) {
+          // 转发成功
+        },
+        fail: function (res) {
+          // 转发失败
+        }
+      }
+    }
   }
 })

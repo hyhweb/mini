@@ -1,1 +1,8 @@
-/* pages/plan/plandetail/index.wxss */
+.weui-media-box_appmsg{
+-webkit-box-align:initial;
+-webkit-align-items:initial;
+align-items:initial;
+}
+.padb150{
+  padding-bottom:150rpx;
+}

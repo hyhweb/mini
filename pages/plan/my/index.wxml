@@ -16,7 +16,7 @@
               <view class="weui-cell__bd">帐号ID</view>
               <view class="weui-cell__ft ">{{userData.id}}</view>
             </view>
-            <view  class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <view class="weui-cell__bd">帐号昵称</view>
               <view class="weui-cell__ft">{{userData.nick}}</view>
             </view>
@@ -38,7 +38,18 @@
             </navigator>
           </view>
         </li>
+        <li>
+          <view class="weui-cells weui-cells_after-title mart20">
+            <navigator open-type="navigate" url="/pages/plan/suggestion/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+              <view class="weui-cell__bd">反馈意见</view>
+              <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </navigator>
+             </view>
+        </li>
       </ul>
+
     </view>
+
+
   </view>
 </view>

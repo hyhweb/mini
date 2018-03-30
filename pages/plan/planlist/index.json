@@ -1,5 +1,5 @@
 {
   "navigationBarTitleText": "春晨计",
-  "enablePullDownRefresh": true,
+  "enablePullDownRefresh": false,
   "backgroundTextStyle": "dark"
 }

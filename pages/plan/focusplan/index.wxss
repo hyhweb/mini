@@ -11,6 +11,3 @@
   line-height: 50rpx;
   color:#333;
 }
-.weui-media-box__title {
-  line-height: 3;
-}

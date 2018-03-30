@@ -1,0 +1,18 @@
+<view class="container" style="background-color:#fff;">
+  <view class="page pad20">
+
+    <view class="page__bd">
+   
+      <view>
+        <view class='mart30'>
+          <textarea bindinput="bindInput" value='{{suggestion}}' auto-height name="suggestion" class=" border weui-textarea" placeholder="输入您的意见或建议" style="min-height: 6em;" />
+        </view>
+        <view class="weui-textarea-counter " style="margin-bottom:60rpx">{{suggestion.length}}/200</view>
+      </view>
+    </view>
+     <view class="pad20" style="padding-top:50rpx;margin-bottom:30rpx; height:200rpx;background-color:#fff;">
+        <button disabled="{{disabled}}" bindtap='submit' class="weui-btn" type="primary">提交</button>
+    </view>
+  
+  </view>
+</view>

@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id:'',
+    id: '',
     bannerImg: '',
     objectTypeArray: app.globalData.visibleType,
     title: '',
@@ -20,18 +20,17 @@ Page({
   getDetail() {
     var params = {
       method: 'post',
-      url: '/planService/GetList',
+      url: '/planService/GetPlan',
       data: {
         "planId": this.data.id
       },
       success: (res) => {
-        console.log(res, 'res');
         this.setData({
           bannerImg: res.data.content[0].bannerImg,
           title: res.data.content[0].title,
           des: res.data.content[0].content,
           objectType: res.data.content[0].public,
-          nickType:(res.data.content[0].nickName =="匿名"?1:0),
+          nickType: (res.data.content[0].nickName == "匿名" ? 1 : 0),
           type: res.data.content[0].planType,
           date: res.data.content[0].completeTime
         })
@@ -39,13 +38,27 @@ Page({
     }
     app.ajax(params)
   },
-  
-  savePlan(){
-    var params = {
-      method: 'post',
-      url: '/planService/SavePlan',
-      data: {
-        "id":this.data.id,
+
+  savePlan() {
+    if (this.data.title == "") {
+      wx.showToast({
+        title: '请填写春晨计的名称',
+        icon: 'none'
+      })
+
+      return;
+    }
+    if (this.data.des == "") {
+      wx.showToast({
+        title: '请填写春晨计的描述',
+        icon: 'none'
+      })
+      return;
+    }
+    app.loginAfterHandle(() => {
+
+      var formData ={
+        "planId": this.data.id,
         "bannerImg": this.data.bannerImg,
         "title": this.data.title,
         "content": this.data.des,
@@ -53,32 +66,66 @@ Page({
         "completeTime": this.data.date,
         "public": this.data.objectType,
         "nickName": this.data.nickArray[this.data.nickType].text
-      },
-      success: (res) => {
-        console.log(res, 'res');
-        wx.navigateTo({
-          url: '/pages/plan/myplan/index?current=' + this.data.current
-        })
       }
-    }
-    app.ajax(params)
+      if (formData.nickName == "匿名") {
+        formData.isNick = 1;
+      } else {
+        formData.isNick = 0;
+      }
+      if (formData.bannerImg == "http://chunchenji.com/wximages/default_banner_img.png") {
+        formData.bannerImg = "";
+      }
+      var params = {
+        method: 'post',
+        url: '/planService/SavePlan',
+        data: formData,
+        success: (res) => {
+          wx.navigateBack({
+            delta: 1
+          })
+           wx.removeStorageSync('titleField')
+           wx.removeStorageSync('desField')
+          // wx.navigateTo({
+          //   url: '/pages/plan/myplan/index?current=' + this.data.current,
+          //   success: () => {
+          //     wx.removeStorageSync('titleField')
+          //     wx.removeStorageSync('desField')
+          //   }
+          // })
+        }
+      }
+      app.ajax(params)
+    })
   },
 
-  deletePlan(){
-    var params = {
-      method: 'post',
-      url: '/planService/DeletePlan',
-      data: {
-        "planId": this.data.id
-      },
-      success: (res) => {
-        console.log(res, 'res');
-        wx.navigateTo({
-          url: '/pages/plan/myplan/index'
-        })
+  deletePlan() {
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '计划删除将无法恢复，确定删除？',
+      success: function (res) {
+        if (res.confirm) {
+          app.loginAfterHandle(() => {
+            var params = {
+              method: 'post',
+              url: '/planService/DeletePlan',
+              data: {
+                "planId": that.data.id
+              },
+              success: (res) => {
+                wx.navigateTo({
+                  url: '/pages/plan/myplan/index'
+                })
+              }
+            }
+            app.ajax(params)
+          })
+        } else if (res.cancel) {
+         
+        }
       }
-    }
-    app.ajax(params)
+    })
+
   },
   uploaderImg() {
     wx.chooseImage({
@@ -87,7 +134,6 @@ Page({
         this.setData({
           prevImg: tempFilePaths[0]
         })
-        console.log(tempFilePaths, 'tempfilepaths')
         wx.uploadFile({
           url: 'https://wxapi.chunchenji.com/api/services/SCMS/commonService/UploadImg', //仅为示例，非真实的接口地址
           filePath: tempFilePaths[0],
@@ -97,11 +143,19 @@ Page({
           },
           success: (res) => {
             var data = JSON.parse(res.data)
-            console.log(data, 'data')
-            this.setData({
-              bannerImg: 'http://' + data.content.imgUrl
-            })
-            //do something
+            if (data.code == 1000) {
+              this.setData({
+                bannerImg: data.content.imgUrl
+              })
+              wx.showToast({
+                title: '图片上传成功'
+              })
+            } else {
+              wx.showToast({
+                title: '图片上传失败',
+                icon: 'none'
+              })
+            }
           },
           complete: function (res) {
 
@@ -112,7 +166,7 @@ Page({
   },
   submint() {
     this.savePlan()
-   
+
   },
   bindPickerChange: function (e) {
     this.setData({
@@ -154,9 +208,9 @@ Page({
       current: (options.current || 0)
     })
     this.setData({
-      id:options.id
+      id: options.id
     })
-    this.getDetail() 
+    this.getDetail()
   },
 
   /**
@@ -172,18 +226,17 @@ Page({
   onShow: function () {
     var title = wx.getStorageSync('titleField');
     var des = wx.getStorageSync('desField');
-    if (title) {
+    if (title != "") {
       this.setData({
         title: title
       })
     }
-    if (des) {
+    if (des !="") {
       this.setData({
         des: des
       })
     }
 
-    console.log(title, 'title')
   },
 
   /**
@@ -215,9 +268,21 @@ Page({
   },
 
   /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    * 用户点击右上角分享
+    */
+  onShareAppMessage: function (res) {
+    if (res.from !== 'button') {
+      return {
+        title: '制定计划，做生活的主导者',
+        path: '/pages/plan/home/index',
+        imageUrl: 'http://chunchenji.com/webImages/chunchenjishareImg.png',
+        success: function (res) {
+          // 转发成功
+        },
+        fail: function (res) {
+          // 转发失败
+        }
+      }
+    }
   }
 })

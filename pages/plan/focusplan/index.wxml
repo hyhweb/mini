@@ -8,14 +8,14 @@
           <view class="list-item mar30  box-shadow-b" wx:key="{{*this}}" wx:for="{{listData}}">
             <navigator open-type="navigate" url="/pages/plan/plandetail/index?id={{item.planId}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
               <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                <image class="weui-media-box__thumb" src="{{item.wxAvatarUrl}}" />
+                <image mode='aspectFit' class="weui-media-box__thumb border" src="{{item.wxAvatarUrl}}" />
               </view>
               <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                 <view class="weui-media-box__desc">{{item.nickName}}</view>
                 <view class=" weui-media-box__title">{{item.title}}</view>
               </view>
               <view style="width:50rpx;height:50rpx;" class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                <image style="vertical-align:initial; padding-left:20rpx;" class="weui-media-box__thumb" src="{{item.bannerImg}}" />
+                <image mode='aspectFit' style="vertical-align:initial; padding-left:20rpx;" class="weui-media-box__thumb" src="{{item.bannerImg}}" />
               </view>
             </navigator>
             <view class="borderb progressbox">
@@ -31,8 +31,8 @@
               
             </view>
           </view>
-          <view class='pad30 align-center' wx:if="{{noMoreData}}">
-            到底部了
+          <view class='pad30 align-center c3' wx:if="{{noMoreData}}">
+            没有数据了
           </view>
         </view>
       </view>

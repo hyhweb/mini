@@ -11,9 +11,22 @@ Page({
     this.setData({
       inputText: e.detail.value
     })
-    console.log(e, 'e')
   },
   confirmHandle() {
+    if (this.data.inputText == ""){
+      wx.showToast({
+        title: '描述不能为空',
+        icon: 'none'
+      })
+      return;
+    }
+    if (this.data.inputText.length>200){
+      wx.showToast({
+        title: '描述不能超过200文字',
+        icon:'none'
+      })
+      return;
+    }
     wx.setStorageSync('desField', this.data.inputText)
     wx.navigateBack()
   },
@@ -25,7 +38,6 @@ Page({
     wx.setNavigationBarTitle({
       title: options.barTitle
     })
-    console.log(options, 'options')
     this.setData({
       inputText: options.inputText
     })

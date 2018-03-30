@@ -18,5 +18,5 @@
 }
 
 .weui-media-box__title {
-  line-height: 3;
+  line-height: 2;
 }
