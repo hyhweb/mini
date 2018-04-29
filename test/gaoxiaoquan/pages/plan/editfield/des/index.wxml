@@ -1,0 +1,14 @@
+<form bindsubmit="confirmHandle">
+<view class="">
+  <view class="">
+  
+    <view class="pad20">
+      <textarea maxlength="-1" name="inputText" value='{{inputText}}' auto-height class="weui-textarea border" placeholder="" style="min-height: 3.3em" />
+      <view class="weui-textarea-counter">{{inputText.length}}/500</view>
+    </view>
+  </view>
+  <view class="mar30">
+    <button block type="primary" form-type='submit'>完成</button>
+  </view>
+</view>
+  </form>

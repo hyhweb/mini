@@ -1,0 +1,65 @@
+<view class="page pad30">
+<form bindsubmit="formSubmit">
+  <view class='marb30'>
+    <text>完成进度</text>
+  </view>
+  <view class='marb30'>
+    <slider name="progress" activeColor="#0099FF" block-color="#0099FF" block-size="18" show-value value="{{progress}}" />
+  </view>
+
+  <view class='marb30'>
+    <text>完成情况</text>
+  </view>
+  <view class=' padt10' >
+            <view class=" weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange">
+                <label class="weui-cell-box weui-check__label" style="position:relative" wx:for="{{planList}}" wx:key="item.planOfListId">
+                    <checkbox class="weui-check" value="{{item.planOfListId}}" checked="{{item.status ==1}}"/>
+
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="20" wx:if="{{!(item.status ==1)}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="20" wx:if="{{item.status ==1}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd"><text>{{item.text}}</text></view>
+                    <view class="small-badge minifont" wx:if="{{item.status ==1}}" style="font-size:13px;right:0;left:inherit">已完成</view>
+                </label>
+            </checkbox-group>
+        </view>
+  </view>
+  <view class='pad10' >
+  <textarea  maxlength="-1"  bindinput="bindInput" value='{{completeContent}}' auto-height  name="completeContent" class="weui-textarea border " placeholder="输入完成情况"  style="min-height: 3.3em;border-radius:4px;" />
+  </view>
+  <view class="weui-textarea-counter " style="margin-bottom:60rpx">{{completeContent.length}}/1000</view>
+  <view style="margin-bottom:80rpx;">
+      <view class="weui-uploader">
+                        <view class="weui-uploader__hd">
+                            <view class="weui-uploader__title">成果图片｜可上传9张图片</view>
+                            <view class="weui-uploader__info">{{images.length}}/9</view>
+                        </view>
+                        <view class="weui-uploader__bd " >
+                            <view class="weui-uploader__files clearfixd" id="uploaderFiles">
+                                <block wx:for="{{images}}" wx:key="*this">
+                                    <view class="weui-uploader__file " bindtap="previewImage" id="{{item}}" style="position:relative;">
+                                    <view class=" pad10">
+                                    
+                                        <image data-src="{{item.imgUrl}}" class="weui-uploader__img border" src="{{item.imgUrl}}" mode="aspectFill" bindtap="previewImage" />
+                                        <icon data-index="{{index}}" bindtap='removePic' class="icon-small"  type="clear" size="20"  style="position:absolute;right:0rpx;top:0rpx;"></icon>
+                                        </view>
+                                    </view>
+                                </block>
+                            </view>
+                            <view class="weui-uploader__input-box">
+                                <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                            </view>
+                        </view>
+                    </view>
+
+
+  </view>
+  <view>
+    <button formType="submit" type='primary'>
+    完成提交
+    </button>
+  </view>
+  </form>
+</view>

@@ -1,0 +1,13 @@
+.weui-media-box_appmsg{
+-webkit-box-align:initial;
+-webkit-align-items:initial;
+align-items:initial;
+}
+.padb150{
+  padding-bottom:150rpx;
+}
+button.weui-vcode-btn{
+  position: initial;
+  background-color:initial;
+  border-radius:0;
+}

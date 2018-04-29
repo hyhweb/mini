@@ -1,0 +1,13 @@
+.weui-cell-box {
+  position:relative;
+display:-webkit-box;
+display:-webkit-flex;
+display:flex;
+-webkit-box-align:baseline;
+-webkit-align-items:baseline;
+align-items:baseline;
+border:1px solid #eee;
+padding:20rpx;
+margin-bottom: 20rpx;
+border-radius: 4px;
+}

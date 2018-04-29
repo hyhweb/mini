@@ -1,0 +1,28 @@
+<view class=" ">
+  <view class="">
+    <form bindsubmit="confirmHandle">
+      <view class="">
+
+
+        <view wx:for="{{dataList}}" wx:key="{{this*}}" class="weui-cells weui-cells_after-title mart30">
+          <view class="weui-cell weui-cell_input" style="padding-right:8px;">
+            <view class="weui-cell__bd" >
+              <textarea placeholder="" auto-height id="{{index}}" bindinput="bindInput" name="{{index}}" value='{{item.text}}' class="weui-input" style="width:96%" ></textarea>
+              
+            </view>
+            <view  class="weui-cell__ft">
+            <text style="padding:3px;background:#eee;border-radius:4px" class="c5" data-index="{{index}}" bindtap="removeRow">删</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="clearfixd" style="padding-right:30rpx; padding-top:30rpx;">
+          <button type='primary' bindtap='addList' style="width:150rpx; float:right;padding:0;margin:0;line-height:2; font-size:12px;">增加</button>
+        </view>
+        <view class="mar30" style="padding-top:150rpx;">
+          <button block type="default" formType="submit">确定</button>
+        </view>
+      </view>
+    </form>
+  </view>
+</view>
